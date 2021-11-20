@@ -1,17 +1,17 @@
 <template>
 <div v-show="step == 3">
     <h1>Done.</h1>
-</div>  
+</div>
 </template>
 
 <script>
 export default {
-    name:'DoneMessage',
-    props: {
-        step:{
-            type:Number,
-            required:true
-        }
+  name: 'DoneMessage',
+  props: {
+    step: {
+      type: Number,
+      required: true
     }
+  }
 }
 </script>

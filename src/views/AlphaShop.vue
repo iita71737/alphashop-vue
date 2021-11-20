@@ -30,17 +30,32 @@
             </div>
           </div>
         </div>
-        <FormStepOne :v-if="this.step == 0" :step="step" @after-filled-out="afterFilledOut" :form-data="formdata"/>
+        <FormStepOne
+          :v-if="this.step == 0"
+          :step="step"
+          @after-filled-out="afterFilledOut"
+          :form-data="formData"
+        />
         <FormStepTwo
           :v-if="this.step == 1"
           :step="step"
           @after-selected-shippingway="childByValue"
-          :form-data="formdata"
+          :form-data="formData"
         />
-        <FormStepThree :v-if="this.step == 2" :step="step" @after-filled-creditcard="handleCreditCard" :form-data="formdata"/>
-        <FinishedMessage :v-if="this.steproute > 3" :step="step"/>
+        <FormStepThree
+          :v-if="this.step == 2"
+          :step="step"
+          @after-filled-creditcard="handleCreditCard"
+          :form-data="formData"
+        />
+        <FinishedMessage :v-if="this.steproute > 3" :step="step" />
       </div>
-      <Carts :cart-items="cartitems" :shipping-cost="shippingCost" :step="step" v-show="this.step<3"/>
+      <Carts
+        :cart-items="cartItems"
+        :shipping-cost="shippingCost"
+        :step="step"
+        v-show="this.step < 3"
+      />
     </div>
 
     <div id="btn-control" class="control-panel">
@@ -51,19 +66,23 @@
           class="btn-previus"
           @click.stop.prevent="handlePrev()"
         >
-        <router-link :to="{ path: `step${steproute-1}` }">
-          <i class="far fa-long-arrow-left"></i> 上一步</router-link>
+          <router-link :to="{ path: `step${steproute - 1}` }">
+            <i class="far fa-long-arrow-left"></i> 上一步</router-link
+          >
         </button>
         <button
           v-if="step < 2"
           :class="{ 'd-none': hiddenNext }"
           class="btn-next"
           @click.stop.prevent="handleNext()"
-        > 
-        <router-link :to="{ path: `step${steproute+1}`, params:{ step:steproute } }">
-          下一步<i class="far fa-long-arrow-right"></i></router-link>
+        >
+          <router-link
+            :to="{ path: `step${steproute + 1}`, params: { step: steproute } }"
+          >
+            下一步<i class="far fa-long-arrow-right"></i
+          ></router-link>
         </button>
-  
+
         <button
           v-else-if="step == 2"
           :class="{ 'd-none': hiddenNext }"
@@ -80,7 +99,7 @@
         >
           顯示已完成訂單<i class="far fa-long-arrow-right"></i>
         </b-button>
-        
+
         <b-modal
           id="modal-1"
           centered
@@ -89,8 +108,8 @@
           hide-header
         >
           <div>
-            <ul class="list-group" v-for="item in cartitems" :key="item.id">
-              <li class="list-group-item">{{item}}</li>
+            <ul class="list-group" v-for="item in cartItems" :key="item.id">
+              <li class="list-group-item">{{ item }}</li>
             </ul>
           </div>
         </b-modal>
@@ -102,44 +121,44 @@
 </template>
 
 <script>
-import FormStepOne from "./../components/FormStepOne.vue";
-import FormStepTwo from "./../components/FormStepTwo.vue";
-import FormStepThree from "./../components/FormStepThree.vue";
-import Carts from "./../components/Carts.vue";
+import FormStepOne from './../components/FormStepOne.vue'
+import FormStepTwo from './../components/FormStepTwo.vue'
+import FormStepThree from './../components/FormStepThree.vue'
+import Carts from './../components/Carts.vue'
 import FinishedMessage from './../components/FinishedMessage.vue'
 
-const dummyCartitems = [
+const dummyCartItems = [
   {
     id: 5433,
-    name: "破壞補丁修身牛仔褲",
+    name: '破壞補丁修身牛仔褲',
     amount: 1,
     price: 3999,
-    image: "https://upload.cc/i1/2021/05/23/bpjY2a.jpg",
+    image: 'https://upload.cc/i1/2021/05/23/bpjY2a.jpg'
   },
   {
     id: 5434,
-    name: "低腰直筒牛仔褲",
+    name: '低腰直筒牛仔褲',
     amount: 2,
     price: 1299,
-    image: "https://upload.cc/i1/2021/05/23/t2dVMp.jpeg",
-  },
-];
+    image: 'https://upload.cc/i1/2021/05/23/t2dVMp.jpeg'
+  }
+]
 
 const STORAGE_KEY = 'alphashop-app-vue'
 
 export default {
-  name: "AlphaShop",
+  name: 'AlphaShop',
   components: {
     FormStepOne,
     FormStepTwo,
     FormStepThree,
     Carts,
-    FinishedMessage,
+    FinishedMessage
   },
-  data() {
+  data () {
     return {
-      cartitems: [],
-      formdata: '',
+      cartItems: [],
+      formData: '',
       step: 0,
       shippingCost: 0,
       hiddenPrev: true,
@@ -150,104 +169,104 @@ export default {
       stepTwoCheck: false,
       stepThree: false,
       stepThreeCheck: false,
-      steproute:1
-    };
-  },
-  methods: {
-    fetchCartItems() {
-      this.cartitems = { ...dummyCartitems };
-    },
-    handlePrev() {
-      if(this.step > 0 ){
-      this.step = this.step - 1;
-      this.steproute = this.step +1
-      this.switchBtnStatus(this.step);
-      }
-    },
-    handleNext() {
-      if(this.step < 3 ){
-      this.step = this.step + 1;
-      this.steproute = this.step +1
-      this.switchBtnStatus(this.step);
-      }
-    },
-    switchBtnStatus(currentStep) {
-      switch (currentStep) {
-        case 0:
-          this.hiddenPrev = true;
-          this.stepOne = true;
-          this.stepOneCheck = false;
-          this.stepTwo = false;
-          this.stepTwoCheck = false;
-          this.stepThree = false;
-          this.stepThreeCheck = false;
-          this.step = currentStep;
-          break;
-        case 1:
-          this.hiddenPrev = false;
-          this.stepOne = false;
-          this.stepOneCheck = true;
-          this.stepTwo = true;
-          this.stepTwoCheck = false;
-          this.stepThree = false;
-          this.stepThreeCheck = false;
-          this.step = currentStep;
-          break;
-        case 2:
-          this.hiddenPrev = false;
-          this.stepOne = true;
-          this.stepOneCheck = true;
-          this.stepTwo = true;
-          this.stepTwoCheck = true;
-          this.stepThree = true;
-          this.stepThreeCheck = false;
-          this.step = currentStep;
-          break;
-        case 3:
-          this.hiddenPrev = false;
-          this.stepOne = true;
-          this.stepOneCheck = true;
-          this.stepTwo = true;
-          this.stepTwoCheck = true;
-          this.stepThree = true;
-          this.stepThreeCheck = true;
-      }
-    },
-    submitOrder() {
-      this.step = this.step + 1;
-      this.steproute = this.step +1
-      this.saveStorage()
-      this.switchBtnStatus(this.step);
-    },
-     saveStorage() {
-    console.log('saveStorage')  //測試完可刪
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.formdata))
-  },
-    childByValue(childValue) {
-      // childValue就是子元件傳過來的值
-      this.shippingCost = Number(childValue);
-      this.formdata = { ...this.formdata , shippingfee :this.shippingCost }
-    },
-    afterFilledOut(BIdata) {
-      // childValue就是子元件傳過來的值
-      this.formdata = {...BIdata}
-    },
-    handleCreditCard(data){
-      this.formdata = {...this.formdata, data}
+      steproute: 1
     }
   },
-  created() {
-    this.fetchCartItems();
-    this.formdata = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
+  methods: {
+    fetchCartItems () {
+      this.cartItems = { ...dummyCartItems }
+    },
+    handlePrev () {
+      if (this.step > 0) {
+        this.step = this.step - 1
+        this.steproute = this.step + 1
+        this.switchBtnStatus(this.step)
+      }
+    },
+    handleNext () {
+      if (this.step < 3) {
+        this.step = this.step + 1
+        this.steproute = this.step + 1
+        this.switchBtnStatus(this.step)
+      }
+    },
+    switchBtnStatus (currentStep) {
+      switch (currentStep) {
+        case 0:
+          this.hiddenPrev = true
+          this.stepOne = true
+          this.stepOneCheck = false
+          this.stepTwo = false
+          this.stepTwoCheck = false
+          this.stepThree = false
+          this.stepThreeCheck = false
+          this.step = currentStep
+          break
+        case 1:
+          this.hiddenPrev = false
+          this.stepOne = false
+          this.stepOneCheck = true
+          this.stepTwo = true
+          this.stepTwoCheck = false
+          this.stepThree = false
+          this.stepThreeCheck = false
+          this.step = currentStep
+          break
+        case 2:
+          this.hiddenPrev = false
+          this.stepOne = true
+          this.stepOneCheck = true
+          this.stepTwo = true
+          this.stepTwoCheck = true
+          this.stepThree = true
+          this.stepThreeCheck = false
+          this.step = currentStep
+          break
+        case 3:
+          this.hiddenPrev = false
+          this.stepOne = true
+          this.stepOneCheck = true
+          this.stepTwo = true
+          this.stepTwoCheck = true
+          this.stepThree = true
+          this.stepThreeCheck = true
+      }
+    },
+    submitOrder () {
+      this.step = this.step + 1
+      this.steproute = this.step + 1
+      this.saveStorage()
+      this.switchBtnStatus(this.step)
+    },
+    saveStorage () {
+      console.log('saveStorage') // 測試完可刪
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.formData))
+    },
+    childByValue (childValue) {
+      // childValue就是子元件傳過來的值
+      this.shippingCost = Number(childValue)
+      this.formData = { ...this.formData, shippingfee: this.shippingCost }
+    },
+    afterFilledOut (BIdata) {
+      // childValue就是子元件傳過來的值
+      this.formData = { ...BIdata }
+    },
+    handleCreditCard (data) {
+      this.formData = { ...this.formData, data }
+    }
+  },
+  created () {
+    this.fetchCartItems()
+    this.formData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
   },
   watch: {
-    formdata: {
+    formData: {
       handler: function () {
-          console.log('saveToStorage')
-          this.saveStorage()
+        console.log('saveToStorage')
+        this.saveStorage()
       }
     },
     deep: true
   }
-};
+}
 </script>

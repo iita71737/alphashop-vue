@@ -38,52 +38,52 @@
 
 <script>
 export default {
-  name: "Carts",
+  name: 'Carts',
   props: {
     cartItems: {
       type: Object,
-      required: true,
+      required: true
     },
-    shippingCost:{
-        type:Number,
-        required: true
+    shippingCost: {
+      type: Number,
+      required: true
     },
     step: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      carts:[],
-      totalMoney: 0,
-    };
+      carts: [],
+      totalMoney: 0
+    }
   },
   methods: {
-      fetchCarts(){
-          this.carts = { ...this.cartItems}
-      },
-       changeMoney(item,way) {
-            if (way > 0){
-                item.amount++;
-            }else{
-                item.amount--;
-                if (item.amount < 1) {//限制数量最少为1
-                    item.amount = 1;
-                }
-            }
-            this.calcTotalPrice();//每次改变商品数量就调用计算总金额函数
-        },
-        calcTotalPrice() {
-            this.totalMoney = 0
-            for( let i in this.carts){
-                this.totalMoney += Number( this.carts[i].amount * this.carts[i].price ) 
-            }
-        },
+    fetchCarts () {
+      this.carts = { ...this.cartItems }
+    },
+    changeMoney (item, way) {
+      if (way > 0) {
+        item.amount++
+      } else {
+        item.amount--
+        if (item.amount < 1) { // 限制数量最少为1
+          item.amount = 1
+        }
+      }
+      this.calcTotalPrice()// 每次改变商品数量就调用计算总金额函数
+    },
+    calcTotalPrice () {
+      this.totalMoney = 0
+      for (const i in this.carts) {
+        this.totalMoney += Number(this.carts[i].amount * this.carts[i].price)
+      }
+    }
   },
-  created() {
-      this.fetchCarts()
-      this.calcTotalPrice()
+  created () {
+    this.fetchCarts()
+    this.calcTotalPrice()
   }
-};
+}
 </script>

@@ -11,19 +11,18 @@
 </template>
 
 <script>
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap";
-import Navbar from "./components/Navbar.vue";
-import Footer from "./components/Footer.vue";
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
+import Navbar from './components/Navbar.vue'
+import Footer from './components/Footer.vue'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Navbar,
-    Footer,
+    Footer
   }
-};
+}
 </script>
 
 <style>

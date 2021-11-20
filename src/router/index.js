@@ -19,18 +19,18 @@ const routes = [
   {
     path: '/step2',
     name: 'step2',
-     component: () => import('../views/AlphaShop.vue')
+    component: () => import('../views/AlphaShop.vue')
   },
   {
     path: '/step3',
     name: 'step3',
-     component: () => import('../views/AlphaShop.vue')
+    component: () => import('../views/AlphaShop.vue')
   },
-   {
+  {
     path: '*',
     name: 'not-found',
-    component: NotFound,
-  },
+    component: NotFound
+  }
 ]
 
 const router = new VueRouter({
