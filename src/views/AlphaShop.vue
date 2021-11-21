@@ -7,7 +7,7 @@
           <div class="step-wrapper">
             <div
               class="step"
-              :class="{ checked: step > 0, active: step === 1 }"
+              :class="{ checked: step > 1, active: step === 1 }"
             >
               <div class="circle-container"></div>
               <span>寄送地址</span>
@@ -15,7 +15,7 @@
             <div class="connect-line"></div>
             <div
               class="step"
-              :class="{ checked: step > 0, active: step === 2 }"
+              :class="{ checked: step > 2, active: step === 2 }"
             >
               <div class="circle-container"></div>
               <span>運送方式</span>
@@ -23,7 +23,7 @@
             <div class="connect-line"></div>
             <div
               class="step"
-              :class="{ checked: step > 0, active: step === 3 }"
+              :class="{ checked: step > 3, active: step === 3 }"
             >
               <div class="circle-container"></div>
               <span>付款資訊</span>
