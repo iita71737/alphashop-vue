@@ -7,7 +7,7 @@
           <div class="step-wrapper">
             <div
               class="step"
-              :class="{ checked: stepOneCheck, active: stepOne }"
+              :class="{ checked: step > 0, active: step === 1 }"
             >
               <div class="circle-container"></div>
               <span>寄送地址</span>
@@ -15,7 +15,7 @@
             <div class="connect-line"></div>
             <div
               class="step"
-              :class="{ checked: stepTwoCheck, active: stepTwo }"
+              :class="{ checked: step > 0, active: step === 2 }"
             >
               <div class="circle-container"></div>
               <span>運送方式</span>
@@ -23,7 +23,7 @@
             <div class="connect-line"></div>
             <div
               class="step"
-              :class="{ checked: stepThreeCheck, active: stepThree }"
+              :class="{ checked: step > 0, active: step === 3 }"
             >
               <div class="circle-container"></div>
               <span>付款資訊</span>
@@ -163,12 +163,6 @@ export default {
       shippingCost: 0,
       hiddenPrev: true,
       hiddenNext: false,
-      stepOne: true,
-      stepOneCheck: false,
-      stepTwo: false,
-      stepTwoCheck: false,
-      stepThree: false,
-      stepThreeCheck: false,
       steproute: 1
     }
   },
@@ -194,52 +188,26 @@ export default {
       switch (currentStep) {
         case 0:
           this.hiddenPrev = true
-          this.stepOne = true
-          this.stepOneCheck = false
-          this.stepTwo = false
-          this.stepTwoCheck = false
-          this.stepThree = false
-          this.stepThreeCheck = false
           this.step = currentStep
           break
         case 1:
           this.hiddenPrev = false
-          this.stepOne = false
-          this.stepOneCheck = true
-          this.stepTwo = true
-          this.stepTwoCheck = false
-          this.stepThree = false
-          this.stepThreeCheck = false
           this.step = currentStep
           break
         case 2:
           this.hiddenPrev = false
-          this.stepOne = true
-          this.stepOneCheck = true
-          this.stepTwo = true
-          this.stepTwoCheck = true
-          this.stepThree = true
-          this.stepThreeCheck = false
           this.step = currentStep
           break
         case 3:
           this.hiddenPrev = false
-          this.stepOne = true
-          this.stepOneCheck = true
-          this.stepTwo = true
-          this.stepTwoCheck = true
-          this.stepThree = true
-          this.stepThreeCheck = true
       }
     },
     submitOrder () {
       this.step = this.step + 1
       this.steproute = this.step + 1
-      this.saveStorage()
       this.switchBtnStatus(this.step)
     },
     saveStorage () {
-      console.log('saveStorage') // 測試完可刪
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.formData))
     },
     childByValue (childValue) {
@@ -257,12 +225,14 @@ export default {
   },
   created () {
     this.fetchCartItems()
-    this.formData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
+    this.formData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+      sex: 'male',
+      location: 'select'
+    }
   },
   watch: {
     formData: {
       handler: function () {
-        console.log('saveToStorage')
         this.saveStorage()
       }
     },

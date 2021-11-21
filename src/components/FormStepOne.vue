@@ -6,7 +6,7 @@
         <label for="">稱謂</label>
         <div class="select-wrapper">
           <select name="" v-model="BI.sex">
-            <option value="male" selected>先生</option>
+            <option value="male">先生</option>
             <option value="female">女士</option>
           </select>
         </div>
@@ -45,8 +45,8 @@
       <div class="city-row form-row">
         <label for="">縣市</label>
         <div class="select-wrapper">
-          <select name="" id="" v-model="BI.locatation">
-            <option value="" disabled selected>請選擇縣市</option>
+          <select name="" id="" v-model="BI.location">
+            <option value="select" disabled>請選擇縣市</option>
             <option value="taipei">台北市</option>
             <option value="NewTaipei">新北市</option>
             <option value="Keelung">基隆市</option>
@@ -103,7 +103,7 @@ export default {
         name: '',
         tel: '',
         email: '',
-        locatation: '',
+        location: '',
         address: ''
       }
     }
