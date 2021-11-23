@@ -234,7 +234,9 @@ header {
         .nav-btn {
           margin: 30px 30px;
           opacity: 0;
-
+          &:hover {
+            cursor: pointer;
+          }
           img {
             height: 25px;
             width: 25px;
