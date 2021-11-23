@@ -1,13 +1,20 @@
 <template>
-      <header>
+  <header>
     <a href="https://reurl.cc/Gd9drx">
-      <img src="https://upload.cc/i1/2021/05/13/KdqUfy.png
-" alt="AC Shop Logo">
+      <img
+        id="logo"
+        src="https://upload.cc/i1/2021/05/13/KdqUfy.png
+"
+        alt="AC Shop Logo"
+      />
     </a>
     <label class="navbar-toggle-label" for="navbar-toggle">
       <span class="hamburger">
-        <img src="https://upload.cc/i1/2021/05/11/YUPEwJ.png
-" alt="Hamburger" />
+        <img
+          src="https://upload.cc/i1/2021/05/11/YUPEwJ.png
+"
+          alt="Hamburger"
+        />
       </span>
     </label>
     <input type="checkbox" class="navbar-toggle" id="navbar-toggle" />
@@ -41,13 +48,16 @@
       </ul>
       <ul class="nav-btn-list">
         <li class="nav-btn">
-          <img src="https://upload.cc/i1/2021/05/11/TMkziD.png" alt="search">
+          <img src="https://upload.cc/i1/2021/05/11/TMkziD.png" alt="search" />
         </li>
         <li class="nav-btn">
-          <img src="https://upload.cc/i1/2021/05/11/T5EVKe.png" alt="cart">
+          <img src="https://upload.cc/i1/2021/05/11/T5EVKe.png" alt="cart" />
         </li>
         <li class="nav-btn" id="dark-mode-btn">
-          <img src="https://upload.cc/i1/2021/05/11/vWMZqI.png" alt="darkmode">
+          <img
+            src="https://upload.cc/i1/2021/05/11/vWMZqI.png"
+            alt="darkmode"
+          />
         </li>
       </ul>
     </nav>

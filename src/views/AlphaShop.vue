@@ -7,7 +7,7 @@
           <div class="step-wrapper">
             <div
               class="step"
-              :class="{ checked: step > 1, active: step === 1 }"
+              :class="{ checked: step > 0, active: step === 0 }"
             >
               <div class="circle-container"></div>
               <span>寄送地址</span>
@@ -15,7 +15,7 @@
             <div class="connect-line"></div>
             <div
               class="step"
-              :class="{ checked: step > 2, active: step === 2 }"
+              :class="{ checked: step > 1, active: step === 1 }"
             >
               <div class="circle-container"></div>
               <span>運送方式</span>
@@ -23,7 +23,7 @@
             <div class="connect-line"></div>
             <div
               class="step"
-              :class="{ checked: step > 3, active: step === 3 }"
+              :class="{ checked: step > 2, active: step === 2 }"
             >
               <div class="circle-container"></div>
               <span>付款資訊</span>
@@ -61,8 +61,7 @@
     <div id="btn-control" class="control-panel">
       <div class="button-wrapper">
         <button
-          v-if="step < 3"
-          :class="{ 'd-none': hiddenPrev }"
+          :class="{ 'd-none': isHidePrev }"
           class="btn-previus"
           @click.stop.prevent="handlePrev()"
         >
@@ -71,8 +70,7 @@
           >
         </button>
         <button
-          v-if="step < 2"
-          :class="{ 'd-none': hiddenNext }"
+          :class="{ 'd-none': isHideNext }"
           class="btn-next"
           @click.stop.prevent="handleNext()"
         >
@@ -84,15 +82,16 @@
         </button>
 
         <button
-          v-else-if="step == 2"
+          v-if="step == 2"
           :class="{ 'd-none': hiddenNext }"
           class="btn-next"
           @click.stop.prevent="submitOrder()"
         >
           確認下單<i class="far fa-long-arrow-right"></i>
         </button>
+
         <b-button
-          v-else-if="step > 2"
+          v-if="step == 3"
           :class="{ 'd-none': hiddenNext }"
           class="btn-next"
           v-b-modal.modal-1
@@ -166,6 +165,15 @@ export default {
       steproute: 1
     }
   },
+  computed: {
+    isHidePrev () {
+      return this.step === 0
+    },
+    isHideNext () {
+      return this.step >= 2
+    }
+  },
+
   methods: {
     fetchCartItems () {
       this.cartItems = { ...dummyCartItems }
@@ -182,24 +190,6 @@ export default {
         this.step = this.step + 1
         this.steproute = this.step + 1
         this.switchBtnStatus(this.step)
-      }
-    },
-    switchBtnStatus (currentStep) {
-      switch (currentStep) {
-        case 0:
-          this.hiddenPrev = true
-          this.step = currentStep
-          break
-        case 1:
-          this.hiddenPrev = false
-          this.step = currentStep
-          break
-        case 2:
-          this.hiddenPrev = false
-          this.step = currentStep
-          break
-        case 3:
-          this.hiddenPrev = false
       }
     },
     submitOrder () {
